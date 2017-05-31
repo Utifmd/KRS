@@ -1,5 +1,5 @@
-/*
 
+/*
 tambahkan
 TUGAS AKIR
 TAMBAHKAN KRS
@@ -48,7 +48,8 @@ CREATE TABLE tb_krs_able(
     jam_selesai VARCHAR(35) NOT NULL);
 
 CREATE TABLE tb_krs(
-    kodekrs VARCHAR(15) PRIMARY KEY NOT NULL,
+    idkrs int(15) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    kodekrs VARCHAR(15) NOT NULL,
     nobp VARCHAR(12) NOT NULL, 
     kodemk VARCHAR(10) NOT NULL, 
     nidn VARCHAR(15) NOT NULL,
@@ -95,9 +96,9 @@ INSERT INTO `tb_krs_able` VALUES ('KRS01', 'KK01', 'KP01', 'DN01', 'GA', '2016/2
 INSERT INTO `tb_krs_able` VALUES ('KRS02', 'KK02', 'KP02', 'DN02', 'GE', '2017/2018', 'RAB', '10.30', '01.00');
 INSERT INTO `tb_krs_able` VALUES ('KRS03', 'KK03', 'KP03', 'DN03', 'GE', '2018/2019', 'JUM', '01.30', '30.00');
 
-INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','ZE','KK01','111200156',70,80,70,0,'-',0,0);
-INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','AM','KK02','101100206',45,90,79,0,'-',0,0);
-INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','ZE','KK01','111100304',90,90,80,0,'-',0,0);
+INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','ZE','KK01','13100031',70,80,70,0,'-',0,0);
+INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','AM','KK02','13100032',45,90,79,0,'-',0,0);
+INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','ZE','KK01','14100034',90,90,80,0,'-',0,0);
 
 UPDATE tb_nilai SET nakhir=(0.2*nt)+(0.35*nmid)+(0.45*sem);
 UPDATE tb_nilai SET nhuruf="A" WHERE nakhir >=85 AND nakhir <=100 AND LEFT(nobp,2)>="14";
@@ -128,8 +129,14 @@ UPDATE tb_nilai SET mutu=1.75 WHERE nhuruf="C-";
 UPDATE tb_nilai SET mutu=1 WHERE nhuruf="D";
 UPDATE tb_nilai SET mutu=0 WHERE nhuruf="E";
 
-/*CREATE VIEW view_nilai AS SELECT tb_mtk.sks, tb_nilai.*FROM tb_nilai JOIN tb_mtk ON tb_mtk.kodemk=tb_nilai.kodemk;
-UPDATE view_nilai SET bobot=mutu*sks;*/
+/*SELECT tb_mtk.sks, tb_nilai.*, (tb_nilai.mutu * tb_mtk.sks) AS bobot FROM tb_nilai JOIN tb_mtk ON tb_mtk.kodemk=tb_nilai.kodemk;*/
+CREATE VIEW view_nilai AS
+SELECT tb_mhs.namamhs, tb_mtk.sks, tb_nilai.*FROM tb_nilai
+JOIN tb_mtk ON tb_mtk.kodemk=tb_nilai.kodemk
+JOIN tb_mhs ON tb_mhs.nobp=tb_nilai.nobp;
+
+UPDATE view_nilai SET bobot=mutu*sks;
+
 CREATE VIEW view_krs_able AS
 SELECT tb_krs_able.kodekrs, 
 tb_mtk.kodemk, 
@@ -149,11 +156,13 @@ INNER JOIN tb_kampus
 ON (tb_krs_able.kodekampus=tb_kampus.kodekampus)
 INNER JOIN tb_mtk
 ON (tb_krs_able.kodemk=tb_mtk.kodemk)
-GROUP BY tb_krs_able.kodekrs ORDER BY tb_mtk.kodemk
+GROUP BY tb_krs_able.kodekrs ORDER BY tb_mtk.kodemk;
 
 
 CREATE VIEW view_krs AS
-SELECT tb_mtk.kodemk, 
+SELECT 
+tb_krs.idkrs, 
+tb_mtk.kodemk, 
 tb_mtk.namamk, 
 tb_mtk.sks, 
 tb_krs.sem, 
@@ -176,7 +185,7 @@ ON (tb_krs.nobp=tb_mhs.nobp)
 INNER JOIN tb_mtk
 ON (tb_krs.kodemk=tb_mtk.kodemk)
 
-GROUP BY tb_krs.kodekrs ORDER BY tb_krs.kodekrs
+GROUP BY tb_krs.kodekrs ORDER BY tb_krs.kodekrs;
 /*
 CREATE DATABASE db_tdbs;
 USE db_tdbs;
@@ -297,9 +306,10 @@ UPDATE tnilai SET mutu=1.75 WHERE nhuruf="C-";
 UPDATE tnilai SET mutu=1 WHERE nhuruf="D";
 UPDATE tnilai SET mutu=0 WHERE nhuruf="E";
 
-CREATE VIEW tview AS SELECT mtk.sks,tnilai.*FROM tnilai JOIN mtk ON mtk.kodemk=tnilai.kodemk;
-UPDATE tview SET bobot=mutu*sks;
+CREATE VIEW view_nilai AS
+SELECT tb_mtk.sks, tb_nilai.*, (tb_nilai.mutu * tb_mtk.sks) AS bobot FROM tb_nilai JOIN tb_mtk ON tb_mtk.kodemk=tb_nilai.kodemk;
+//CREATE VIEW tview AS SELECT mtk.sks,tnilai.*FROM tnilai JOIN mtk ON mtk.kodemk=tnilai.kodemk;
+//UPDATE tview SET bobot=mutu*sks;
 
 SELECT tnilai.semester,tnilai.tahunajaran,tnilai.prodi,tnilai.kodedosen,dosen.namadosen,tnilai.kodemk,
 mtk.namamk,mtk.sks,tnilai.nobp,mhs.namamhs,mhs.jeniskel,mhs.tmplahir,mhs.tgllahir,tnilai.nt,tnilai.nmid,tnilai.semester,tnilai.nakhir,tnilai.nhuruf,tnilai.mutu,tnilai.bobot FROM tnilai,dosen,mtk,mhs WHERE tnilai.kodedosen=dosen.kodedosen AND tnilai.kodemk=mtk.kodemk AND tnilai.nobp=mhs.nobp;
-*/

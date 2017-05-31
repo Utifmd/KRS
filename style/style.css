@@ -1,6 +1,6 @@
+
 .table, .td, .th {    
     border: 1px solid #ddd;
-    text-align: left;
 }
 .table {
     border-collapse: collapse;
@@ -8,14 +8,13 @@
 .th, .td {
     padding: 15px;
 }
-th{
-    text-align:center;
-}
 .text_field{
-    width:13em;
     padding:5px;
 }
-
+.text_field_short{
+    width: 2.5em;
+    padding:5px;
+}
 .btn_menu{
     margin: 20px;
     padding: 10px;

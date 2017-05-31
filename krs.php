@@ -1,8 +1,16 @@
 <?php
 include "koneksi.php";
+error_reporting(0);
 $id = $_GET['id_mhs'];
 $query_krs = mysql_query("SELECT *FROM view_krs WHERE nobp='$id'") or die(mysql_error());
-$data_krs = mysql_fetch_array($query_krs)
+$data_krs = mysql_fetch_array($query_krs);
+
+//hapus method
+$id_krs = $_GET['id_krs'];
+if($id_krs){
+	$delete = mysql_query("DELETE FROM tb_krs WHERE idkrs='$id_krs'") or die (mysql_error());
+	echo "<meta http-equiv=refresh content=1; url=mahasiswa.php;>";
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,21 +40,9 @@ $data_krs = mysql_fetch_array($query_krs)
 			include "koneksi.php";
 			if(isset($_POST['btn_tambah'])){
 				include "koneksi.php";
-				
-				//generate kode krs
-				$sql_check_id_krs = mysql_query("SELECT kodekrs FROM tb_krs ORDER BY kodekrs DESC") or die(mysql_error());
-				$dt_check_id_krs = mysql_fetch_array($sql_check_id_krs);
-				if(mysql_num_rows($sql_check_id_krs)==0){
-					$kodekrs="KRS01";
-				}else{
-					$kodekrs=$dt_check_id_krs['kodekrs'];
-					$generate_kd=explode('KRS', $kodekrs);
-					$kodekrs="KRS".sprintf("%02s", $generate_kd[1]+1);
-				}
-
-				$id = $_GET['id_mhs'];
-
-				$no_bp = $id;
+			
+				$no_bp = $_GET['id_mhs'];
+				$kodekrs = $_POST['txt_kodekrs'];
 				$kodemk = $_POST['txt_kodemk'];
 				$nidn = $_POST['txt_nidn'];
 				$kodekampus = $_POST['txt_kodekampus'];
@@ -57,7 +53,7 @@ $data_krs = mysql_fetch_array($query_krs)
 				$jam_selesai = $_POST['txt_jam_selesai'];
 				$status = $_POST['txt_status'];
 				
-				mysql_query("INSERT INTO tb_krs VALUES('$kodekrs', '$no_bp', '$kodemk', '$nidn', '$kodekampus', '$sem','$tahun_krs', '$hari_krs', '$jam_mulai', '$jam_selesai', '$status')");
+				mysql_query("INSERT INTO tb_krs VALUES(null, '$kodekrs', '$no_bp', '$kodemk', '$nidn', '$kodekampus', '$sem','$tahun_krs', '$hari_krs', '$jam_mulai', '$jam_selesai', '$status')");
 				echo "<meta http-equiv=refresh content=1;url=krs.php?id_mhs=$id>";
 			}
 
@@ -120,77 +116,85 @@ $data_krs = mysql_fetch_array($query_krs)
 	<br /><br />
 	<h2>KRS yang diambil</h2>
 	<a href="mahasiswa.php"><button>Daftar mahasiswa</button></a><br/><br />
-	<table class="table">
-		<tr class="tr">
-			<td></td>
-			<th class="th">Bp / Nama Mahasiswa : </th>
-			<td class="td" colspan="8"><?php echo $data_krs['nobp']?> / <?php echo $data_krs['namamhs']?></td>
-		</tr>
-		<tr class="tr">
-			<td></td>
-			<th class="th">Semester. TA : </th>
-			<td class="td" colspan="8"><?php echo $data_krs['sem'];?> <?php echo $data_krs['tahun_krs'];?></td>
-		</tr>
-		<tr class="tr">
-			<th class="th">No.</th>
-			<th class="th">Kode Matakuliah</th>
-			<th class="th">Matakuliah</th>
-			<th class="th">Sks</th>
-			<th class="th">Semester</th>
-			<th class="th">Hari</th>
-			<th class="th">Mulai</th>
-			<th class="th">Selesai</th>
-			<th class="th">Lokal</th>
-			<th class="th">Status</th>
-		</tr>
-		<?php 
-		$no=0;
-		include "koneksi.php";
-		$id = $_GET['id_mhs'];
-		$query_krs = mysql_query("SELECT *FROM view_krs WHERE nobp='$id'") or die(mysql_error());
-		while($data_krs = mysql_fetch_array($query_krs)){
-			$no++;
-			if($data_krs['sem']=='GE'){
-				$sem = "GENAP";
-			}else{
-				$sem = "GANJIL";
-			};
-			if($data_krs['status']=='PEN'){
-				$status = "PENDING";
-			}else{
-				$status = "SELESAI";
-			};
-			if($data_krs['hari_krs']=='SEN'){
-				$hari = "SENEN";
-			}elseif($data_krs['hari_krs']=='SEL'){
-				$hari = "SELASA";
-			}elseif($data_krs['hari_krs']=='RAB'){
-				$hari = "RABU";
-			}elseif($data_krs['hari_krs']=='KAM'){
-				$hari = "KAMIS";
-			}elseif($data_krs['hari_krs']=='JUM'){
-				$hari = "JUMAT";
-			}elseif($data_krs['hari_krs']=='SAB'){
-				$hari = "SABTU";
-			}else{
-				$hari = "MINGGU";
-			};
-			$tahun_krs = $data_krs['tahun_krs'];
-		?>
-		<tr class="tr">
-			<td class="td"><?php echo $no;?></td>
-			<td class="td"><?php echo $data_krs['kodemk']?></td>
-			<td class="td"><?php echo $data_krs['namamk']?></td>
-			<td class="td"><?php echo $data_krs['sks']?></td>
-			<td class="td"><?php echo $sem?></td>
-			<td class="td"><?php echo $hari?></td>
-			<td class="td"><?php echo $data_krs['jam_mulai']?></td>
-			<td class="td"><?php echo $data_krs['jam_selesai']?></td>
-			<td class="td"><?php echo $data_krs['lokal']?></td>
-			<td class="td"><?php echo $status?></td>
-		</tr>
-		<?php } ?>
-	</table><br /><br />
+	<div id="content_show">
+		<table class="table">
+				<tr class="tr">
+					<td></td>
+					<th class="th">Bp / Nama Mahasiswa : </th>
+					<td class="td" colspan="9"><?php echo $data_krs['nobp']?> / <?php echo $data_krs['namamhs']?></td>
+				</tr>
+				<tr class="tr">
+					<td></td>
+					<th class="th">Semester. TA : </th>
+					<td class="td" colspan="9"><?php echo $data_krs['sem'];?> <?php echo $data_krs['tahun_krs'];?></td>
+				</tr>
+				<tr class="tr">
+					<th class="th">No.</th>
+					<th class="th">Kode Matakuliah</th>
+					<th class="th">Matakuliah</th>
+					<th class="th">Sks</th>
+					<th class="th">Semester</th>
+					<th class="th">Hari</th>
+					<th class="th">Mulai</th>
+					<th class="th">Selesai</th>
+					<th class="th">Lokal</th>
+					<th class="th">Status</th>
+					<th class="th">Aksi</th>
+				</tr>
+				<?php 
+				$no=0;
+				include "koneksi.php";
+				$id = $_GET['id_mhs'];
+				$query_krs = mysql_query("SELECT *FROM view_krs WHERE nobp='$id'") or die(mysql_error());
+				while($data_krs = mysql_fetch_array($query_krs)){
+					$no++;
+					if($data_krs['sem']=='GE'){
+						$sem = "GENAP";
+					}else{
+						$sem = "GANJIL";
+					};
+					if($data_krs['status']=='PEN'){
+						$status = "PENDING";
+					}else{
+						$status = "SELESAI";
+					};
+					if($data_krs['hari_krs']=='SEN'){
+						$hari = "SENEN";
+					}elseif($data_krs['hari_krs']=='SEL'){
+						$hari = "SELASA";
+					}elseif($data_krs['hari_krs']=='RAB'){
+						$hari = "RABU";
+					}elseif($data_krs['hari_krs']=='KAM'){
+						$hari = "KAMIS";
+					}elseif($data_krs['hari_krs']=='JUM'){
+						$hari = "JUMAT";
+					}elseif($data_krs['hari_krs']=='SAB'){
+						$hari = "SABTU";
+					}else{
+						$hari = "MINGGU";
+					};
+					$tahun_krs = $data_krs['tahun_krs'];
+				?>
+				<tr class="tr">
+					<td class="td"><?php echo $no;?></td>
+					<td class="td"><?php echo $data_krs['kodemk']?></td>
+					<td class="td"><?php echo $data_krs['namamk']?></td>
+					<td class="td"><?php echo $data_krs['sks']?></td>
+					<td class="td"><?php echo $sem?></td>
+					<td class="td"><?php echo $hari?></td>
+					<td class="td"><?php echo $data_krs['jam_mulai']?></td>
+					<td class="td"><?php echo $data_krs['jam_selesai']?></td>
+					<td class="td"><?php echo $data_krs['lokal']?></td>
+					<td class="td"><?php echo $status?></td>
+					<td class="td">
+					<a href="krs.php?id_krs=<?php echo $data_krs['idkrs']; ?>"><button>Pilih</button>
+					</a>
+					</td>
+				</tr>
+				<?php } ?>
+			</table>		
+	</div>
+	<br /><br />
 </center>
 </body>
 </html>
