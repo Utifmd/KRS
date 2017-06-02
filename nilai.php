@@ -21,6 +21,23 @@ if (isset($_POST['btn_show'])) {
 			}
 		</style>";
 }
+
+if (isset($_POST['btn_spn'])) {
+	include "koneksi.php";
+	$v_sem = $_POST['txt_sem'];
+	$v_ta = $_POST['txt_ta'];
+	$v_prodi = $_POST['txt_prodi'];
+	$v_nidn = $_POST['txt_nidn'];
+	$v_mhs = $_POST['txt_mhs'];
+	$v_mtk = $_POST['txt_mtk'];
+	$v_nt = $_POST['txt_nt'];
+	$v_nu = $_POST['txt_nu'];
+	$v_ns = $_POST['txt_ns'];
+	$v_na = $_POST['txt_na'];
+	
+	$qry_spn = mysql_query("INSERT INTO tb_nilai VALUES('0', '$v_sem', '$v_ta', '$v_nidn', '$v_prodi', '$v_mhs', '$v_mtk', '$v_nt', '$v_nu', '$v_ns', '$v_na', '-' , '0', '0' )") or die(mysql_error());
+	echo "<meta http-equiv=refresh content=1;url=nilai.php?id_dsn=$nidn>";
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,22 +59,81 @@ if (isset($_POST['btn_show'])) {
 	<a href="dosen.php"><button>Dosen</button></a>
 	<br><br>
 	<table class="table">
+		<form method="post" action="">
 		<tr class="tr">
-			<form method="post" action="">
 			<th class="th" colspan="1">Dosen</th>
 			<td class="td" colspan="8"><?php echo $dt_dsn['namadosen']; ?></td>
 			<td class="td" colspan="1">
 				<button name="btn_show" id="btn_show">Sunting nilai</button>
 				<button name="btn_hide" id="btn_hide">Sunting nilai</button>
 			</td>
-			</form>
 		</tr>
 		<tr id="tr_hide" class="tr">
 			<th class="th" colspan="2"></th>
 			<th class="th" colspan="2">Semester</th>
+			<th class="th" colspan="3"><input type="text" name="txt_sem" class="text_field"></th>
+			<th class="th" colspan="3"></th>
+		</tr>
+		<tr id="tr_hide" class="tr">
+			<th class="th" colspan="2"></th>
+			<th class="th" colspan="2">TA</th>
+			<th class="th" colspan="3"><input type="text" name="txt_ta" class="text_field"></th>
+			<th class="th" colspan="3"></th>
+		</tr>
+		<tr id="tr_hide" class="tr">
+			<th class="th" colspan="2"></th>
+			<th class="th" colspan="2">Prodi</th>
+			<th class="th" colspan="3"><input type="text" name="txt_prodi" class="text_field"></th>
+			<th class="th" colspan="3"></th>
+		</tr>
+		<tr id="tr_hide" class="tr">
+			<th class="th" colspan="2"></th>
+			<th class="th" colspan="2">Dosen</th>
+			<th class="th" colspan="3"><input type="text" name="txt_nidn" class="text_field"></th>
+			<th class="th" colspan="3"></th>
+		</tr>
+		<tr id="tr_hide" class="tr">
+			<th class="th" colspan="2"></th>
+			<th class="th" colspan="2">Mahasiswa</th>
+			<th class="th" colspan="3"><input type="text" name="txt_mhs" class="text_field"></th>
+			<th class="th" colspan="3"></th>
+		</tr>
+		<tr id="tr_hide" class="tr">
+			<th class="th" colspan="2"></th>
+			<th class="th" colspan="2">Matakuliah</th>
+			<th class="th" colspan="3"><input type="text" name="txt_mtk" class="text_field"></th>
+			<th class="th" colspan="3"></th>
+		</tr>
+		<tr id="tr_hide" class="tr">
+			<th class="th" colspan="2"></th>
+			<th class="th" colspan="2">Tugas</th>
 			<th class="th" colspan="3"><input type="text" name="txt_nt" class="text_field"></th>
 			<th class="th" colspan="3"></th>
 		</tr>
+		<tr id="tr_hide" class="tr">
+			<th class="th" colspan="2"></th>
+			<th class="th" colspan="2">UTS</th>
+			<th class="th" colspan="3"><input type="text" name="txt_nu" class="text_field"></th>
+			<th class="th" colspan="3"></th>
+		</tr>
+		<tr id="tr_hide" class="tr">
+			<th class="th" colspan="2"></th>
+			<th class="th" colspan="2">SEM</th>
+			<th class="th" colspan="3"><input type="text" name="txt_ns" class="text_field"></th>
+			<th class="th" colspan="3"></th>
+		</tr>
+		<tr id="tr_hide" class="tr">
+			<th class="th" colspan="2"></th>
+			<th class="th" colspan="2">Akhir</th>
+			<th class="th" colspan="3"><input type="text" name="txt_na" class="text_field"></th>
+			<th class="th" colspan="3"></th>
+		</tr>
+		<tr id="tr_hide" class="tr">
+			<th class="th" colspan="10">
+				<input type="submit" name="btn_spn" class="btn_spn" value="Simpan">
+			</th>
+		</tr>
+		</form>
 		<tr class="tr">
 			<th class="th" rowspan="2">No. Bp</th>
 			<th class="th" rowspan="2">Mahasiswa</th>

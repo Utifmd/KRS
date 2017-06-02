@@ -62,6 +62,7 @@ CREATE TABLE tb_krs(
     status ENUM('PEN', 'SEL') NOT NULL);
 
 CREATE TABLE tb_nilai(
+    id_nilai int(15) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     semester VARCHAR(20) NOT NULL, 
     tahunajaran VARCHAR(20) NOT NULL,
     prodi VARCHAR(25) NOT NULL,
@@ -96,9 +97,9 @@ INSERT INTO `tb_krs_able` VALUES ('KRS01', 'KK01', 'KP01', 'DN01', 'GA', '2016/2
 INSERT INTO `tb_krs_able` VALUES ('KRS02', 'KK02', 'KP02', 'DN02', 'GE', '2017/2018', 'RAB', '10.30', '01.00');
 INSERT INTO `tb_krs_able` VALUES ('KRS03', 'KK03', 'KP03', 'DN03', 'GE', '2018/2019', 'JUM', '01.30', '30.00');
 
-INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','DN01','KK01','13100031',70,80,70,0,'-',0,0);
-INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','DN02','KK02','13100032',45,90,79,0,'-',0,0);
-INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','DN03','KK01','14100034',90,90,80,0,'-',0,0);
+INSERT INTO `tb_nilai` VALUES (NULL, 'Ganjil','2015/2016','Sistem Informasi','DN01','KK01','13100031',70,80,70,0,'-',0,0);
+INSERT INTO `tb_nilai` VALUES (NULL, 'Ganjil','2015/2016','Sistem Informasi','DN02','KK02','13100032',45,90,79,0,'-',0,0);
+INSERT INTO `tb_nilai` VALUES (NULL, 'Ganjil','2015/2016','Sistem Informasi','DN03','KK01','14100034',90,90,80,0,'-',0,0);
 
 UPDATE tb_nilai SET nakhir=(0.2*nt)+(0.35*nmid)+(0.45*sem);
 UPDATE tb_nilai SET nhuruf="A" WHERE nakhir >=85 AND nakhir <=100 AND LEFT(nobp,2)>="14";
