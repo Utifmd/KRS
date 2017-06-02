@@ -48,23 +48,23 @@ if(!$id){
 <body>
 <center>
 <h2>Daftar Semua Matakuliah</h2>
-<br><a href="index.php"><button>Home</button></a><br><br>
+<!-- <br><a href="index.php"><button>Home</button></a><br><br> -->
 	<form action="" method="post">
 		<table>
-			<tr class="tr">
-				<th class="th">Kode</th>
-				<td class="td">
+			<tr >
+				<th >Kode</th>
+				<td >
 					<input id="input_id"	class="text_field" disabled="true" type="text" name="txt_kode" value="<?php echo $kd_mtk;?>">
 					<label><?php echo $data_mtk['kodemk']; ?></label>
 				</td>
 			</tr>
-			<tr class="tr">
-				<th class="th">Matakuliah</th>
-				<td class="td"><input class="text_field" type="text" name="txt_mtk" value="<?php echo $data_mtk['namamk']; ?>"></td>
+			<tr >
+				<th >Matakuliah</th>
+				<td ><input class="text_field" type="text" name="txt_mtk" value="<?php echo $data_mtk['namamk']; ?>"></td>
 			</tr>
-			<tr class="tr">
-				<th class="th">SKS</th>
-				<td class="td"><input class="text_field" type="number" name="txt_sks" value="<?php echo $data_mtk['sks']; ?>"></td>
+			<tr >
+				<th >SKS</th>
+				<td><input class="text_field" type="number" name="txt_sks" value="<?php echo $data_mtk['sks']; ?>"></td>
 			</tr>
 			<tr>
 				<td></td>

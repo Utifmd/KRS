@@ -9,7 +9,7 @@ $data_krs = mysql_fetch_array($query_krs);
 $id_krs = $_GET['id_krs'];
 if($id_krs){
 	$delete = mysql_query("DELETE FROM tb_krs WHERE idkrs='$id_krs'") or die (mysql_error());
-	echo "<meta http-equiv=refresh content=1; url=mahasiswa.php;>";
+	echo "<meta http-equiv=refresh content=1;url=mahasiswa.php>";
 }
 ?>
 <!DOCTYPE html>
@@ -187,7 +187,7 @@ if($id_krs){
 					<td class="td"><?php echo $data_krs['lokal']?></td>
 					<td class="td"><?php echo $status?></td>
 					<td class="td">
-					<a href="krs.php?id_krs=<?php echo $data_krs['idkrs']; ?>"><button>Pilih</button>
+					<a href="krs.php?id_krs=<?php echo $data_krs['idkrs']; ?>"><button>Hapus</button>
 					</a>
 					</td>
 				</tr>

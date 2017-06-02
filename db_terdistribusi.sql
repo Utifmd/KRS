@@ -96,9 +96,9 @@ INSERT INTO `tb_krs_able` VALUES ('KRS01', 'KK01', 'KP01', 'DN01', 'GA', '2016/2
 INSERT INTO `tb_krs_able` VALUES ('KRS02', 'KK02', 'KP02', 'DN02', 'GE', '2017/2018', 'RAB', '10.30', '01.00');
 INSERT INTO `tb_krs_able` VALUES ('KRS03', 'KK03', 'KP03', 'DN03', 'GE', '2018/2019', 'JUM', '01.30', '30.00');
 
-INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','ZE','KK01','13100031',70,80,70,0,'-',0,0);
-INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','AM','KK02','13100032',45,90,79,0,'-',0,0);
-INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','ZE','KK01','14100034',90,90,80,0,'-',0,0);
+INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','DN01','KK01','13100031',70,80,70,0,'-',0,0);
+INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','DN02','KK02','13100032',45,90,79,0,'-',0,0);
+INSERT INTO `tb_nilai` VALUES ('Ganjil','2015/2016','Sistem Informasi','DN03','KK01','14100034',90,90,80,0,'-',0,0);
 
 UPDATE tb_nilai SET nakhir=(0.2*nt)+(0.35*nmid)+(0.45*sem);
 UPDATE tb_nilai SET nhuruf="A" WHERE nakhir >=85 AND nakhir <=100 AND LEFT(nobp,2)>="14";
@@ -131,8 +131,9 @@ UPDATE tb_nilai SET mutu=0 WHERE nhuruf="E";
 
 /*SELECT tb_mtk.sks, tb_nilai.*, (tb_nilai.mutu * tb_mtk.sks) AS bobot FROM tb_nilai JOIN tb_mtk ON tb_mtk.kodemk=tb_nilai.kodemk;*/
 CREATE VIEW view_nilai AS
-SELECT tb_mhs.namamhs, tb_mtk.sks, tb_nilai.*FROM tb_nilai
+SELECT tb_mhs.namamhs, tb_dsn.namadosen, tb_mtk.sks, tb_nilai.* FROM tb_nilai
 JOIN tb_mtk ON tb_mtk.kodemk=tb_nilai.kodemk
+JOIN tb_dsn ON tb_dsn.nidn=tb_nilai.nidn
 JOIN tb_mhs ON tb_mhs.nobp=tb_nilai.nobp;
 
 UPDATE view_nilai SET bobot=mutu*sks;

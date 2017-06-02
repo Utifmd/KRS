@@ -84,28 +84,28 @@ $id = $_GET['id_mhs'];*/
 		<form method="post">	 
 			<tr>
 				<th>No. Bp</th>
-				<td><input id="input_id" type="text" name="txt_id_mhs" value="<?php echo $vno_bp;?>"><?php echo $vno_bp;?></td>
+				<td><input class="text_field" id="input_id" type="text" name="txt_id_mhs" value="<?php echo $vno_bp;?>"><?php echo $vno_bp;?></td>
 			</tr>
 			<tr>
 				<th>Nama Mahasiswa</th>
-				<td><input type="text" name="txt_mhs" value="<?php echo $vnm_mhs;?>"></td>
+				<td><input class="text_field" type="text" name="txt_mhs" value="<?php echo $vnm_mhs;?>"></td>
 			</tr>
 			<tr>
 				<th>Gender</th>
 				<td>
-					<input type="radio" checked name="txt_gender" value="L" <?php echo ($data_mhs['jeniskel']=='L' ? 'checked' : '');?>><label>Laki-laki</label>
-					<input type="radio" name="txt_gender" value="P" <?php echo ($data_mhs['jeniskel']=='P' ? 'checked' : '');?>><label>Perempuan</label>
+					<input class="text_field" type="radio" checked name="txt_gender" value="L" <?php echo ($data_mhs['jeniskel']=='L' ? 'checked' : '');?>><label>Laki-laki</label>
+					<input class="text_field" type="radio" name="txt_gender" value="P" <?php echo ($data_mhs['jeniskel']=='P' ? 'checked' : '');?>><label>Perempuan</label>
 				</td>
 			</tr>
 			<tr>
 				<th>Tempat Lahir</th>
 				<td>
-				<input type="text" name="txt_tpt_lahir" value="<?php echo $vtmp_lahir;?>">
+				<input class="text_field" type="text" name="txt_tpt_lahir" value="<?php echo $vtmp_lahir;?>">
 				</td>
 			</tr>
 			<tr>
-				<th>Tempat Lahir</th>
-				<td><input type="date" name="txt_tgl_lahir" value="<?php echo $vtgl_lahir;?>"></td>
+				<th>Tanggal Lahir</th>
+				<td><input class="text_field" type="date" name="txt_tgl_lahir" value="<?php echo $vtgl_lahir;?>"></td>
 			</tr>
 			<tr>
 					<th></th>
@@ -126,8 +126,8 @@ $id = $_GET['id_mhs'];*/
 		<!--<tr class="tr">
 			<th colspan="7" class="th" >Nama Mahasiswa : 
 				<form method="post">
-					<input name="txt_mhs" type="text" />
-					<input name="btn_cari" type="submit" value="cari"/>
+					<input class="text_field" name="txt_mhs" type="text" />
+					<input class="text_field" name="btn_cari" type="submit" value="cari"/>
 				</form>
 			</th>
 		</tr>-->
